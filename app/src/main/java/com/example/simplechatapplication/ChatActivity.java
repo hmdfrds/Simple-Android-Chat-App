@@ -118,6 +118,7 @@ rvMessage.scrollToPosition(0);
             message.put("createdAt",timestamp );
             message.put("message", edtMessage.getText().toString());
             message.put("senderId",firebaseUser.getUid());
+            edtMessage.setText("");
             if(documentId.isEmpty()){
                 firebaseFirestore.collection("chats").document().collection("message").add(message).addOnCompleteListener(task -> {
                     task.addOnSuccessListener(documentReference -> {
@@ -161,7 +162,9 @@ rvMessage.scrollToPosition(0);
                         });
                         firebaseFirestore.collection("users").document(receiverId).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
                             task1.addOnSuccessListener(unused -> {
+                                firebaseFirestore.collection("users").document(receiverId).collection("friends").document(firebaseUser.getUid()).update("chatId",documentId);
                                 firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").document(receiverId).update("chatId",documentId);
+
                             });
                             task1.addOnFailureListener(e -> {
 
@@ -175,6 +178,7 @@ rvMessage.scrollToPosition(0);
                 });
             }else {
                 firebaseFirestore.collection("chats").document(documentId).collection("message").add(message).addOnCompleteListener(task -> {
+
 
                 });
             }

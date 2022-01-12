@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Map<String, Object> item) {
                 Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 intent.putExtra("uid",item.get("uid").toString());
                 startActivity(intent);
             }

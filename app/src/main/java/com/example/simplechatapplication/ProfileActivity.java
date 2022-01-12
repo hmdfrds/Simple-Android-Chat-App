@@ -151,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onSuccess(Void unused) {
                                             friendStatus= "friend";
                                             btnSendFriendRequest.setText("Remove Friend");
-                                            firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("requestStatus").document(userId).delete();
+                                            firebaseFirestore.collection("users").document(userId).collection("requestStatus").document(firebaseUser.getUid()).delete();
                                         }
                                     });
                                 }
