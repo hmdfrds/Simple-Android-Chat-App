@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                            Map<String, Object> user = new HashMap<>();
                            user.put("uid",task.getResult().getUser().getUid());
-                           user.put("email", task.getResult().getUser().getEmail());
+                           user.put("email", task.getResult().getUser().getEmail().toLowerCase());
                            firebaseFirestore.collection("users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(task1 -> {
                                task1.addOnSuccessListener(unused -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
                                task1.addOnFailureListener(e -> {

@@ -34,10 +34,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(v -> firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(),edtPassword.getText().toString()).addOnCompleteListener(task -> {
-            task.addOnSuccessListener(authResult -> startActivity(new Intent(LoginActivity.this, HomeActivity.class)));
-
+            task.addOnSuccessListener(authResult ->{
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            });
             task.addOnFailureListener(e -> {
-
             });
         }));
     }

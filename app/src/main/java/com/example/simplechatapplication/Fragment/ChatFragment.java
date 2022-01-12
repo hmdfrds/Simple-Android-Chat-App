@@ -77,7 +77,9 @@ public class ChatFragment extends Fragment {
 
         fabLogout.setOnClickListener(v -> {
             firebaseAuth.signOut();
-            startActivity(new Intent(getActivity(), AuthActivity.class));
+            Intent intent = new Intent(getActivity(), AuthActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
         return view;
 

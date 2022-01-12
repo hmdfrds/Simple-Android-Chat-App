@@ -94,8 +94,6 @@ public class ChatActivity extends AppCompatActivity {
 
                     }
                 }
-
-
                 messageAdapter = new MessageAdapter(ChatActivity.this, messages, item -> {
 
                 });

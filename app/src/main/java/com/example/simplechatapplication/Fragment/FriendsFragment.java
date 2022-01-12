@@ -18,6 +18,7 @@ import android.widget.EditText;
 import com.example.simplechatapplication.Adapter.FriendAdapter;
 import com.example.simplechatapplication.ChatActivity;
 import com.example.simplechatapplication.R;
+import com.example.simplechatapplication.SearchActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 public class FriendsFragment extends Fragment {
 
-    Button btnAddFriend;
+    Button btnSearchAccount;
     EditText edtEmail;
     FirebaseFirestore firebaseFirestore;
     FirebaseUser firebaseUser;
@@ -54,8 +55,7 @@ public class FriendsFragment extends Fragment {
         friendsList = new ArrayList<>();
 
         rvFriendList = view.findViewById(R.id.rvFriendList);
-        edtEmail = view.findViewById(R.id.edtAddEmail);
-        btnAddFriend = view.findViewById(R.id.btnAddFriend);
+        btnSearchAccount = view.findViewById(R.id.btnSearchAccount);
         firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").addSnapshotListener((value, error) -> {
             if(!value.isEmpty()){
                 for (DocumentSnapshot ds : value){
@@ -75,24 +75,10 @@ public class FriendsFragment extends Fragment {
         });
 
 
-        btnAddFriend.setOnClickListener(new View.OnClickListener() {
+        btnSearchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseFirestore.collection("users").whereEqualTo("email", edtEmail.getText().toString()).get().addOnCompleteListener(task -> {
-                    task.addOnSuccessListener(queryDocumentSnapshots -> {
-
-
-
-                        Map<String, Object> friend = new HashMap<>();
-                        friend.put("id",queryDocumentSnapshots.getDocuments().get(0).getId());
-                        friend.put("chatId","");
-
-                        firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").document(queryDocumentSnapshots.getDocuments().get(0).getId()).set(friend);
-                    });
-                    task.addOnFailureListener(e -> {
-
-                    });
-                });
+               startActivity(new Intent(getContext(), SearchActivity.class));
             }
         });
 
