@@ -3,15 +3,11 @@ package com.example.simplechatapplication.Adapter;
 
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplechatapplication.R;
@@ -24,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(String item);
@@ -45,42 +41,47 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     // inflates the row layout from xml when needed
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-         view = mInflater.inflate(R.layout.message_row, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == 1){
+            view = mInflater.inflate(R.layout.my_message_row, parent, false);
+            return new MyViewHolder(view);
+        }
+        else{
+            view = mInflater.inflate(R.layout.your_message_row, parent, false);
+            return new YourViewHolder(view);
+        }
+
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Map<String, Object> email = mData.get(position);
+        if(email.get("senderId").toString().trim().equals(firebaseUser.getUid().trim())) {
+            return 1;
+        }
+        return 2;
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Map<String, Object> email = mData.get(position);
         Timestamp timestamp = (Timestamp) email.get("createdAt");
         Date date = timestamp.toDate();
         String newDate = new SimpleDateFormat("HH:mm").format(date);
-        holder.txtMessage.setText(email.get("message").toString());
-        holder.txtTime.setText(newDate);
 
 
-        if(email.get("senderId").toString().trim().equals(firebaseUser.getUid().toString().trim())){
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    750, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.END;
-            holder.lytSubMainMessage.setBackgroundColor(Color.parseColor("#0000FF"));
-            holder.crdText.setLayoutParams(params);
-            holder.txtMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-            holder.txtTime.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-
-        }else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    750, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.START;
-            holder.lytSubMainMessage.setBackgroundColor(Color.parseColor("#FF0000"));
-            holder.crdText.setLayoutParams(params);
-            holder.txtMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            holder.txtTime.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+        if(getItemViewType(position) == 1){
+            MyViewHolder myViewHolder = (MyViewHolder) holder;
+            myViewHolder.txtMyMessage.setText(email.get("message").toString());
+            myViewHolder.txtMyTime.setText(newDate);
+        }
+        else {
+            YourViewHolder yourViewHolder = (YourViewHolder) holder;
+            yourViewHolder.txtYourMessage.setText(email.get("message").toString());
+            yourViewHolder.txtYourTime.setText(newDate);
         }
 
     }
@@ -93,29 +94,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView txtMessage,txtTime;
-        CardView crdText;
-        LinearLayout lytMainMessageRow,lytSubMainMessage;
-
-        ViewHolder(View itemView) {
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
+        TextView txtMyMessage,txtMyTime;
+        MyViewHolder(View itemView) {
             super(itemView);
-            txtMessage = itemView.findViewById(R.id.txtMessageRow);
-            txtTime = itemView.findViewById(R.id.txtTime);
-            crdText = itemView.findViewById(R.id.crdText);
-            lytMainMessageRow = itemView.findViewById(R.id.lytMainMessageRow);
-            lytSubMainMessage = itemView.findViewById(R.id.lytSubMainMessage);
-
+            txtMyMessage = itemView.findViewById(R.id.txtMyMessageRow);
+            txtMyTime = itemView.findViewById(R.id.txtMyTime);
         }
         public void bind(final String item, final OnItemClickListener listener) {
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);
                 }
             });
         }
+    }
 
+    // stores and recycles views as they are scrolled off screen
+    public class YourViewHolder extends RecyclerView.ViewHolder  {
+        TextView txtYourMessage,txtYourTime;
+        YourViewHolder(View itemView) {
+            super(itemView);
+            txtYourTime = itemView.findViewById(R.id.txtYourTime);
+            txtYourMessage = itemView.findViewById(R.id.txtYourMessageRow);
+        }
+        public void bind(final String item, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
+        }
     }
 
 
