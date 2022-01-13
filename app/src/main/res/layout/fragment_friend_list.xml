@@ -6,18 +6,22 @@
 
     android:orientation="vertical"
 
-    tools:context=".Fragment.FriendsFragment">
+    tools:context=".Fragment.FriendListFragment">
 
-    <com.google.android.material.tabs.TabLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tabLayoutFriends"/>
+        android:id="@+id/rvFriendList"/>
 
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewPagerFriends"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Account"
+        android:id="@+id/btnSearchAccount"
+        />
 
 
 
