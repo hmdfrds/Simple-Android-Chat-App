@@ -29,12 +29,14 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import net.steamcrafted.materialiconlib.MaterialIconView;
+
 import java.util.ArrayList;
 
 
 public class ChatFragment extends Fragment {
 
-    FloatingActionButton fabLogout;
+    MaterialIconView fabLogout;
     FirebaseAuth firebaseAuth;
     RecyclerView rvChat;
     FirebaseFirestore firebaseFirestore;
