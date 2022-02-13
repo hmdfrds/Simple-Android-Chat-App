@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/Register_label"
         android:fontFamily="sans-serif-black"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please fill all the details"
+        android:text="@string/fill_detail"
         android:fontFamily="sans-serif"
         android:textColor="@color/black" />
 
@@ -34,7 +34,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name">
+        android:hint="@string/name_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email">
+        android:hint="@string/email_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password_label"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +78,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirm Password"
+        android:hint="@string/password_label"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -105,7 +105,7 @@
             android:id="@+id/uploadImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap Here to Upload Picture"
+            android:text="@string/uploadpicture_label"
             android:layout_gravity="center"
             android:layout_marginHorizontal="50dp"
             android:textColor="@color/black"
@@ -122,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/btnRegister"
-        android:text="Register"
+        android:text="@string/Register_label"
         android:backgroundTint="@color/black"/>
 
 </LinearLayout>

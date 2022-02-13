@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Email">
+        android:hint="@string/email_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Password"
+        android:hint="@string/password_label"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:backgroundTint="@color/black"
-        android:text="Login" />
+        android:text="@string/login_label" />
 
 </LinearLayout>

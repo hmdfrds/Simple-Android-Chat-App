@@ -41,9 +41,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener);
         String email = mData.get(position).get("email").toString();
-
         holder.txtAccountId.setText(email);
-
     }
 
     // total number of rows

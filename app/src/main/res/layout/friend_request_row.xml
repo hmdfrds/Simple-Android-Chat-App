@@ -32,7 +32,7 @@
         android:layout_height="30dp"
         android:layout_weight="1"
         android:id="@+id/btnDeclineFriendRequest"
-        android:text="Decline"
+        android:text="@string/Decline_label"
         android:textSize="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="#F44336"/>
@@ -41,7 +41,7 @@
         android:layout_height="30dp"
         android:layout_weight="1"
         android:id="@+id/btnAcceptFriendRequest"
-        android:text="Accept"
+        android:text="@string/Accept_label"
         android:textSize="10dp"
         android:backgroundTint="#4CAF50"/>
 

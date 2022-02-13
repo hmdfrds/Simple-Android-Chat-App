@@ -3,6 +3,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="friend_label">Friend</string>
+    <string name="email_label">Email</string>
+    <string name="welcome_label">Welcome to Simple Chat</string>
+    <string name="change_label">Change language </string>
+    <string name="Register_label">Register</string>
+    <string name="fill_detail">Please Fill the details</string>
+    <string name="name_label">Name</string>
+    <string name="password_label">Password</string>
+    <string name="uploadpicture_label">Tap Here to Upload Picture</string>
+    <string name="login_label">Login</string>
+    <string name="noaccount_label">Did not have an account? Register</string>
+    <string name="send_label">Send</string>
+    <string name="send_friend_request">Send Friend Request</string>
+    <string name="Recent_label">Last recent chat</string>
+    <string name="Search_label">Search Account</string>
+    <string name="Decline_label">Decline</string>
+    <string name="Accept_label">Accept</string>
+    <string name="chat_label">Chat</string>
+    <string name="profile_label">Profile</string>
+    <string name="Friend_label">Friend List</string>
+    <string name="Approval_label">Waiting For Approval</string>
+
+
+
 
 
 </resources>

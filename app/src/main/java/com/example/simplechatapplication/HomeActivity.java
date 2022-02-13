@@ -27,9 +27,9 @@ public class HomeActivity extends AppCompatActivity {
         fragmentAdapter = new FragmentAdapter(fragmentManager, getLifecycle());
         viewPager2.setAdapter(fragmentAdapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Chat"));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.chat_label)));
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.friend_label)));
-        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.profile_label)));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

@@ -61,8 +61,8 @@ public class FriendsFragment extends Fragment {
         friendFragmentAdapter = new FriendFragmentAdapter(fragmentManager, getLifecycle());
         viewPager2Friend.setAdapter(friendFragmentAdapter);
 
-        tabLayoutFriend.addTab(tabLayoutFriend.newTab().setText("Friend List"));
-        tabLayoutFriend.addTab(tabLayoutFriend.newTab().setText("Waiting For Approval"));
+        tabLayoutFriend.addTab(tabLayoutFriend.newTab().setText(getResources().getString(R.string.Friend_label)));
+        tabLayoutFriend.addTab(tabLayoutFriend.newTab().setText(getResources().getString(R.string.Approval_label)));
 
         tabLayoutFriend.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
