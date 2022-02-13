@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friend_label">Kawan</string>
+    <string name="name_label">Nama</string>
+    <string name="chat_label">Perbualan</string>
+    <string name="profile_label">Profil</string>
+    <string name="change_label">tukar bahasa</string>
+    <string name="register_label">Tiada Akaun? Sila Daftar</string>
+    <string name="login_label">Log Masuk</string>
+
+
+
+
+
+</resources>
