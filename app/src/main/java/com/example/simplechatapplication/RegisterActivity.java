@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(v -> {
-            if(!edtPassword.getEditText().toString().equals(edtConfirmPassword.getEditText().toString())){
+            if(!edtPassword.getEditText().getText().toString().equals(edtConfirmPassword.getEditText().getText().toString())){
                 Toast.makeText(RegisterActivity.this, "Password is not same", Toast.LENGTH_SHORT).show();
             }
             else {
