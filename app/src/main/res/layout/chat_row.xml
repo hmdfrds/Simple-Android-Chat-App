@@ -16,6 +16,7 @@
         android:padding="10dp">
 
         <ImageView
+            android:id="@+id/profileImgChat"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="#9E9E9E"/>

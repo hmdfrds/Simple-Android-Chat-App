@@ -81,8 +81,6 @@ public class ChatActivity extends AppCompatActivity {
                         if(messages.contains(dc.getData())){
                         }else{
                                 messages.add(dc.getData());
-
-
                         }
                     }
                     firstCall = false;
