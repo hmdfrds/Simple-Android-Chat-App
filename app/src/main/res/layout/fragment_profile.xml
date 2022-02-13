@@ -8,6 +8,16 @@
     tools:context=".Fragment.ProfileFragment"
     android:padding="20dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginVertical="10dp"/>
+
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="150dp"
@@ -27,21 +37,8 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_marginVertical="10dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please fill all the details"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/black" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edtEmail"
@@ -99,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnConfirm"
         android:text="Confirm"
         android:backgroundTint="@color/black"/>
 
