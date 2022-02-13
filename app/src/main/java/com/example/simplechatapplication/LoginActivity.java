@@ -13,12 +13,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText edtEmail, edtPassword;
+    TextInputLayout edtEmail, edtPassword;
     Button btnLogin;
     FirebaseAuth firebaseAuth;
     @Override
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btnLogin);
 
-        btnLogin.setOnClickListener(v -> firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(),edtPassword.getText().toString()).addOnCompleteListener(task -> {
+        btnLogin.setOnClickListener(v -> firebaseAuth.signInWithEmailAndPassword(edtEmail.getEditText().toString(),edtPassword.getEditText().toString()).addOnCompleteListener(task -> {
             task.addOnSuccessListener(authResult ->{
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

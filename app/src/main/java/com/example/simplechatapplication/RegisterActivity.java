@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText edtEmail, edtPassword, edtConfirmPassword;
+    TextInputLayout edtEmail, edtPassword, edtConfirmPassword;
     Button btnRegister;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -44,29 +45,29 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(v -> {
-            if(!edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())){
+            if(!edtPassword.getEditText().toString().equals(edtConfirmPassword.getEditText().toString())){
                 Toast.makeText(RegisterActivity.this, "Password is not same", Toast.LENGTH_SHORT).show();
             }
             else {
-                firebaseAuth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString()).addOnCompleteListener(task -> {
-                   task.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                       @Override
-                       public void onComplete(@NonNull Task<AuthResult> task) {
+                firebaseAuth.createUserWithEmailAndPassword(edtEmail.getEditText().getText().toString(), edtPassword.getEditText().getText().toString()).addOnCompleteListener(task -> {
+                    task.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                           Map<String, Object> user = new HashMap<>();
-                           user.put("uid",task.getResult().getUser().getUid());
-                           user.put("email", task.getResult().getUser().getEmail().toLowerCase());
-                           firebaseFirestore.collection("users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(task1 -> {
-                               task1.addOnSuccessListener(unused -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
-                               task1.addOnFailureListener(e -> {
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("uid",task.getResult().getUser().getUid());
+                            user.put("email", task.getResult().getUser().getEmail().toLowerCase());
+                            firebaseFirestore.collection("users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(task1 -> {
+                                task1.addOnSuccessListener(unused -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
+                                task1.addOnFailureListener(e -> {
 
-                               });
-                           });
-                       }
-                   });
-                   task.addOnFailureListener(e -> {
+                                });
+                            });
+                        }
+                    });
+                    task.addOnFailureListener(e -> {
 
-                   });
+                    });
                 });
             }
         });

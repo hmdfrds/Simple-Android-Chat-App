@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -15,6 +16,6 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
         ((Button)findViewById(R.id.btnLogin)).setOnClickListener(v -> startActivity(new Intent(AuthActivity.this, LoginActivity.class)));
-        ((Button)findViewById(R.id.btnRegister)).setOnClickListener(v -> startActivity(new Intent(AuthActivity.this, RegisterActivity.class)));
+        ((TextView)findViewById(R.id.btnRegister)).setOnClickListener(v -> startActivity(new Intent(AuthActivity.this, RegisterActivity.class)));
     }
 }
