@@ -76,6 +76,13 @@ public class ChatFragment extends Fragment {
 
                                             chats.add(chatInfo);
 
+                                            chatAdapter = new ChatAdapter(view.getContext(), chats, item -> {
+                                                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                                                intent.putExtra("documentId", item.get("chatId").toString());
+                                                startActivity(intent);
+                                            });
+                                            rvChat.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                                            rvChat.setAdapter(chatAdapter);
                                         }
                                     });
                                 }
@@ -83,13 +90,7 @@ public class ChatFragment extends Fragment {
                         }
                     });
                 }
-                chatAdapter = new ChatAdapter(view.getContext(), chats, item -> {
-                    Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                    intent.putExtra("documentId", item.get("uid").toString());
-                    startActivity(intent);
-                });
-                rvChat.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rvChat.setAdapter(chatAdapter);
+
 
             }
 
