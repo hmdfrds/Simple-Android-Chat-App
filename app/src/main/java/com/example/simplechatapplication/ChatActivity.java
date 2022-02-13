@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.simplechatapplication.Adapter.MessageAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -139,53 +140,58 @@ rvMessage.scrollToPosition(0);
                         participant.add(firebaseUser.getUid());
                         Map<String,Object> map=new HashMap<>();
                         map.put("participant",participant);
-                        firebaseFirestore.collection("chats").document(documentId).set(map);
+                        firebaseFirestore.collection("chats").document(documentId).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void used) {
+                                firebaseFirestore.collection("users").document(firebaseUser.getUid()).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
+                                    task1.addOnSuccessListener(unused -> {
+                                        firebaseFirestore.collection("chats").document(documentId).collection("message").orderBy("createdAt",Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
+                                            if(firstCall){
+                                                for(DocumentSnapshot dc :value){
+                                                    if(messages.contains(dc.getData())){
+                                                    }else{
+                                                        messages.add(dc.getData());
 
-                        firebaseFirestore.collection("users").document(firebaseUser.getUid()).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
-                            task1.addOnSuccessListener(unused -> {
-                                firebaseFirestore.collection("chats").document(documentId).collection("message").orderBy("createdAt",Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
-                                    if(firstCall){
-                                        for(DocumentSnapshot dc :value){
-                                            if(messages.contains(dc.getData())){
-                                            }else{
-                                                messages.add(dc.getData());
 
+                                                    }
+                                                }
+                                                firstCall = false;
+                                            }else {
+                                                for(DocumentSnapshot dc :value){
+                                                    if(messages.contains(dc.getData())){
+                                                    }else{
+                                                        messages.add(0,dc.getData());
+                                                    }
 
+                                                }
                                             }
-                                        }
-                                        firstCall = false;
-                                    }else {
-                                        for(DocumentSnapshot dc :value){
-                                            if(messages.contains(dc.getData())){
-                                            }else{
-                                                messages.add(0,dc.getData());
-                                            }
+                                            messageAdapter = new MessageAdapter(ChatActivity.this, messages, item -> {
 
-                                        }
-                                    }
-                                    messageAdapter = new MessageAdapter(ChatActivity.this, messages, item -> {
+                                            });
+                                            rvMessage.setLayoutManager(new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, true));
+                                            rvMessage.setAdapter(messageAdapter);
+                                            rvMessage.scrollToPosition(0);
+
+                                        });
+                                    });
+                                    task1.addOnFailureListener(e -> {
 
                                     });
-                                    rvMessage.setLayoutManager(new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, true));
-                                    rvMessage.setAdapter(messageAdapter);
-                                    rvMessage.scrollToPosition(0);
-
                                 });
-                            });
-                            task1.addOnFailureListener(e -> {
+                                firebaseFirestore.collection("users").document(receiverId).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
+                                    task1.addOnSuccessListener(unused -> {
+                                        firebaseFirestore.collection("users").document(receiverId).collection("friends").document(firebaseUser.getUid()).update("chatId",documentId);
+                                        firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").document(receiverId).update("chatId",documentId);
 
-                            });
+                                    });
+                                    task1.addOnFailureListener(e -> {
+
+                                    });
+                                });
+                            }
                         });
-                        firebaseFirestore.collection("users").document(receiverId).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
-                            task1.addOnSuccessListener(unused -> {
-                                firebaseFirestore.collection("users").document(receiverId).collection("friends").document(firebaseUser.getUid()).update("chatId",documentId);
-                                firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").document(receiverId).update("chatId",documentId);
 
-                            });
-                            task1.addOnFailureListener(e -> {
 
-                            });
-                        });
 
                     });
                     task.addOnFailureListener(e -> {
