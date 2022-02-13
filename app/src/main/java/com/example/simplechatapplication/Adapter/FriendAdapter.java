@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplechatapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     private List<Map<String,Object>> mData;
     private LayoutInflater mInflater;
     private final OnItemClickListener listener;
+    private Context context;
 
     // data is passed into the constructor
     public FriendAdapter(Context context, List<Map<String,Object>> data, OnItemClickListener listener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.context=context;
         this.listener = listener;
     }
 
@@ -42,15 +45,17 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener);
-        String id = mData.get(position).get("id").toString();
+        String id = mData.get(position).get("uid").toString();
         String email = mData.get(position).get("email").toString();
         String name = mData.get(position).get("name").toString();
         String profileImg = mData.get(position).get("imageUrl").toString();
 
+        Picasso.with(context).load(profileImg).into(holder.profileImg);
+
         holder.txtID.setText(id);
         holder.txtName.setText(name);
         holder.txtEmail.setText(email);
-        holder.profileImg.setImageURI(Uri.parse(profileImg));
+
 
     }
 

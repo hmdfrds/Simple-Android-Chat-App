@@ -9,42 +9,51 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:background="@color/teal_700">
+
         <TextView
+            android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="username"
-            android:id="@+id/txtUsername"/>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Username"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_weight="98"
-
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rvMessage"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
         <EditText
+            android:id="@+id/edtMessage"
             android:layout_width="wrap_content"
-            android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:id="@+id/edtMessage"/>
+            android:layout_weight="3" />
+
         <Button
+            android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnSend"
-            android:text="Send"/>
+            android:text="Send" />
     </LinearLayout>
 
 </LinearLayout>

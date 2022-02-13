@@ -8,11 +8,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -54,6 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
     final int take_photo = 100;
     String file_path = Environment.getExternalStorageDirectory() + "/recent.jpg";
     FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    private Context mContext=RegisterActivity.this;
+
+    private static final int REQUEST = 112;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,87 +152,100 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(RegisterActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        switch (requestCode) {
+            case take_photo: {
+                if (data != null) {
 
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Show an explanation to the user asynchronously -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(RegisterActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 5);
+                    Bitmap srcBmp = (Bitmap) data.getExtras().get("data");
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            // Permission has already been granted
-            switch (requestCode) {
-                case take_photo: {
-                    if (data != null) {
+                    // ... (process image  if necesary)
 
-                        Bitmap srcBmp = (Bitmap) data.getExtras().get("data");
+                    profileImg.setImageBitmap(srcBmp);
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    srcBmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
 
-                        // ... (process image  if necesary)
-
-                        profileImg.setImageBitmap(srcBmp);
-                        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                        srcBmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-
-                        // you can create a new file name "test.jpg" in sdcard folder.
-                        File f = new File(file_path);
-                        try {
-                            f.createNewFile();
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        // write the bytes in file
-                        FileOutputStream fo = null;
-                        try {
-                            fo = new FileOutputStream(f);
-                        } catch (FileNotFoundException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
-                        }
-                        try {
-                            fo.write(bytes.toByteArray());
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-
-                        // remember close de FileOutput
-                        try {
-                            fo.close();
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        Log.e("take-img", "Image Saved to sd card...");
-                        // Toast.makeText(getApplicationContext(),
-                        // "Image Saved to sd card...", Toast.LENGTH_SHORT).show();
-                        break;
+                    // you can create a new file name "test.jpg" in sdcard folder.
+                    File f = new File(file_path);
+                    try {
+                        f.createNewFile();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
+                    // write the bytes in file
+                    FileOutputStream fo = null;
+                    try {
+                        fo = new FileOutputStream(f);
+                    } catch (FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    try {
+                        fo.write(bytes.toByteArray());
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    // remember close de FileOutput
+                    try {
+                        fo.close();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    Log.e("take-img", "Image Saved to sd card...");
+                    // Toast.makeText(getApplicationContext(),
+                    // "Image Saved to sd card...", Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
         }
+
 
 
     }
 
     public void openCamera(View view) {
 
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            if (!hasPermissions(mContext, PERMISSIONS)) {
+                ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS, REQUEST );
+            } else {
+                //do here
+            }
+        } else {
+            //do here
+        }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, take_photo);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //do here
+                } else {
+                    Toast.makeText(mContext, "The app was not allowed to write in your storage", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

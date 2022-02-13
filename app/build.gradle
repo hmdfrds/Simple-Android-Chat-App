@@ -44,4 +44,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'net.steamcrafted:materialiconlib:1.1.5'
     implementation "com.github.smarteist:autoimageslider:1.4.0"
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

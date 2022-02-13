@@ -17,12 +17,14 @@ import com.example.simplechatapplication.Adapter.FriendAdapter;
 import com.example.simplechatapplication.ChatActivity;
 import com.example.simplechatapplication.R;
 import com.example.simplechatapplication.SearchActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -48,22 +50,34 @@ public class FriendListFragment extends Fragment {
         firebaseFirestore.collection("users").document(firebaseUser.getUid()).collection("friends").addSnapshotListener((value, error) -> {
             if(!value.isEmpty()){
                 for (DocumentSnapshot ds : value){
+                    String chatId =ds.getString("chatId");
+
                     if(!friendsList.contains(ds.getData())){
-                        friendsList.add(ds.getData());
+                        firebaseFirestore.collection("users").document(ds.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Map <String, Object> map =new HashMap<>();
+                                map=documentSnapshot.getData();
+                                map.put("chatId",chatId);
+                                friendsList.add(map);
+                                friendAdapter = new FriendAdapter(view.getContext(), friendsList, item -> {
+                                    Intent intent = new Intent(getContext(), ChatActivity.class);
+                                    intent.putExtra("receiverId", item.get("uid").toString());
+                                    intent.putExtra("documentId", item.get("chatId").toString());
+                                    startActivity(intent);
+                                });
+                                rvFriendList.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                                rvFriendList.setAdapter(friendAdapter);
+                            }
+                        });
+
                     }
 
                 }
 
             }
 
-            friendAdapter = new FriendAdapter(view.getContext(), friendsList, item -> {
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("receiverId", item.get("id").toString());
-                intent.putExtra("documentId", item.get("chatId").toString());
-                startActivity(intent);
-            });
-            rvFriendList.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            rvFriendList.setAdapter(friendAdapter);
+
         });
 
 
