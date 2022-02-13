@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextInputLayout edtEmail, edtPassword, edtConfirmPassword;
+    TextInputLayout edtEmail, edtPassword, edtConfirmPassword,edtName;
     Button btnRegister;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
+        edtName = findViewById(R.id.edtName);
 
         btnRegister = findViewById(R.id.btnRegister);
 
@@ -57,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("uid",task.getResult().getUser().getUid());
                             user.put("email", task.getResult().getUser().getEmail().toLowerCase());
+                            user.put("name",task.getResult().getUser().getUid());
                             firebaseFirestore.collection("users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(task1 -> {
                                 task1.addOnSuccessListener(unused -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
                                 task1.addOnFailureListener(e -> {
