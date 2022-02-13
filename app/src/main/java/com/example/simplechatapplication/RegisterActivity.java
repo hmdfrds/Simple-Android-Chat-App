@@ -213,13 +213,13 @@ public class RegisterActivity extends AppCompatActivity {
             if (!hasPermissions(mContext, PERMISSIONS)) {
                 ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS, REQUEST );
             } else {
-                //do here
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, take_photo);
             }
         } else {
             //do here
         }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, take_photo);
+
 
     }
 
