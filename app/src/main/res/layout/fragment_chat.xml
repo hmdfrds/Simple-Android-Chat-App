@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.ChatFragment"
-    android:background="#e4e4e4">
+    android:background="#e4e4e4"
+    android:layout_margin="10dp">
 
     <!-- TODO: Update blank fragment layout -->
 

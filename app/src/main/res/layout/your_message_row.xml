@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         android:layout_marginRight="100dp"
         >
         <LinearLayout
@@ -26,16 +26,17 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:textColor="@color/white"
-                android:text="sdafasdfasfasfsa"
+                android:text="Message"
 
                 android:id="@+id/txtYourMessageRow"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="time"
+                android:text="Time"
                 android:layout_marginLeft="30dp"
                 android:textAlignment="textEnd"
+                android:textSize="10dp"
                 android:id="@+id/txtYourTime"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
