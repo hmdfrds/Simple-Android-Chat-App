@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -148,104 +149,23 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case take_photo: {
-                if (data != null) {
-
-                    Bitmap srcBmp = (Bitmap) data.getExtras().get("data");
-
-                    // ... (process image  if necesary)
-
-                    profileImg.setImageBitmap(srcBmp);
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    srcBmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-
-                    // you can create a new file name "test.jpg" in sdcard folder.
-                    File f = new File(file_path);
-                    try {
-                        f.createNewFile();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    // write the bytes in file
-                    FileOutputStream fo = null;
-                    try {
-                        fo = new FileOutputStream(f);
-                    } catch (FileNotFoundException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                    try {
-                        fo.write(bytes.toByteArray());
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    // remember close de FileOutput
-                    try {
-                        fo.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    Log.e("take-img", "Image Saved to sd card...");
-                    // Toast.makeText(getApplicationContext(),
-                    // "Image Saved to sd card...", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-            }
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            profileImg.setImageBitmap(imageBitmap);
         }
-
-
-
     }
-
     public void openCamera(View view) {
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (!hasPermissions(mContext, PERMISSIONS)) {
-                ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS, REQUEST );
-            } else {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, take_photo);
-            }
-        } else {
-            //do here
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, 1);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
         }
-
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //do here
-                } else {
-                    Toast.makeText(mContext, "The app was not allowed to write in your storage", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    private static boolean hasPermissions(Context context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

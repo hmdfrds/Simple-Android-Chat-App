@@ -45,14 +45,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener);
-        String id = mData.get(position).get("uid").toString();
+        //String id = mData.get(position).get("uid").toString();
         String email = mData.get(position).get("email").toString();
         String name = mData.get(position).get("name").toString();
         String profileImg = mData.get(position).get("imageUrl").toString();
 
         Picasso.with(context).load(profileImg).into(holder.profileImg);
 
-        holder.txtID.setText(id);
+        //holder.txtID.setText(id);
         holder.txtName.setText(name);
         holder.txtEmail.setText(email);
 
@@ -73,7 +73,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
         ViewHolder(View itemView) {
             super(itemView);
-            txtID = itemView.findViewById(R.id.txtID);
+            //txtID = itemView.findViewById(R.id.txtID);
             txtName = itemView.findViewById(R.id.txtName);
             txtEmail = itemView.findViewById(R.id.txtEmail);
             profileImg=itemView.findViewById(R.id.profileImg);
