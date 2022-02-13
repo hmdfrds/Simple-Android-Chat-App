@@ -66,6 +66,7 @@ public class ChatFragment extends Fragment {
             rvChat.setAdapter(chatAdapter);
         });
 
+
         fabLogout.setOnClickListener(v -> {
             firebaseAuth.signOut();
             Intent intent = new Intent(getActivity(), AuthActivity.class);
