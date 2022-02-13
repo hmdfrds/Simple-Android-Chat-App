@@ -33,7 +33,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.friend_row, parent, false);
+        View view = mInflater.inflate(R.layout.chat_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,8 +42,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener);
         String email = mData.get(position);
-
-        holder.txtEmail.setText(email);
+        holder.txtChatName.setText(email);
 
     }
 
@@ -56,16 +55,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView txtEmail;
-
+        TextView txtChatName;
 
 
         ViewHolder(View itemView) {
             super(itemView);
-            txtEmail = itemView.findViewById(R.id.txtEmailRow);
-
-
-
+            txtChatName = itemView.findViewById(R.id.txtChatName);
 
         }
         public void bind(final String item, final OnItemClickListener listener) {

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.simplechatapplication.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,7 +25,7 @@ public class ProfileFragment extends Fragment {
 
     FirebaseFirestore firebaseFirestore;
     FirebaseUser firebaseUser;
-    TextInputLayout textProfileEmail, textProfileName;
+    TextView textProfileEmail, textProfileName;
 
 
 

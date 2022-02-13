@@ -1,9 +1,11 @@
 package com.example.simplechatapplication.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,9 +42,15 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener);
-        String email = mData.get(position).get("id").toString();
+        String id = mData.get(position).get("id").toString();
+        String email = mData.get(position).get("email").toString();
+        String name = mData.get(position).get("name").toString();
+        String profileImg = mData.get(position).get("imageUrl").toString();
 
-        holder.myTextView.setText(email);
+        holder.txtID.setText(id);
+        holder.txtName.setText(name);
+        holder.txtEmail.setText(email);
+        holder.profileImg.setImageURI(Uri.parse(profileImg));
 
     }
 
@@ -55,11 +63,15 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView myTextView;
+        TextView txtName,txtEmail,txtID;
+        ImageView profileImg;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.txtEmailRow);
+            txtID = itemView.findViewById(R.id.txtID);
+            txtName = itemView.findViewById(R.id.txtName);
+            txtEmail = itemView.findViewById(R.id.txtEmail);
+            profileImg=itemView.findViewById(R.id.profileImg);
 
 
 

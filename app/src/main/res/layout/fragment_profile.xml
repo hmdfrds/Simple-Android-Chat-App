@@ -5,89 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.ProfileFragment"
-    android:padding="20dp">
+    android:padding="20dp"
+    tools:context=".Fragment.ProfileFragment">
 
-
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:id="@+id/iv_ep"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:cardPreventCornerOverlap="false"
-        android:layout_marginBottom="10dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="75dp">
+        android:scaleType="fitCenter"
+        android:src="@drawable/chat" />
 
-        <ImageView
-            android:id="@+id/iv_ep"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/chat"
-            android:scaleType="fitCenter" />
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textProfileEmail"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Email">
+        android:fontFamily="sans-serif-black"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="textEmailAddress" />
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
         android:id="@+id/textProfileName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Name">
+        android:hint="Name"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="textEmailAddress" />
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textProfilePassword"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Password"
-        app:passwordToggleEnabled="true">
+        android:fontFamily="sans-serif-black"
+        android:text="Email"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/textProfileEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"/>
 
 
 
 
     <Button
+        android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:id="@+id/btnConfirm"
-        android:text="Confirm"
-        android:backgroundTint="@color/black"/>
+        android:backgroundTint="@color/black"
+        android:text="Confirm" />
 
 </LinearLayout>
