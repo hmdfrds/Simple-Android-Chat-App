@@ -15,13 +15,17 @@ import com.example.simplechatapplication.Adapter.ChatAdapter;
 import com.example.simplechatapplication.AuthActivity;
 import com.example.simplechatapplication.ChatActivity;
 import com.example.simplechatapplication.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChatFragment extends Fragment {
@@ -32,7 +36,7 @@ public class ChatFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     FirebaseUser firebaseUser;
     ChatAdapter chatAdapter;
-    ArrayList<String> chats ;
+    ArrayList<Map<String,Object>> chats ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,16 +58,42 @@ public class ChatFragment extends Fragment {
         firebaseFirestore.collection("users").document(firebaseUser.getUid()).addSnapshotListener((value, error) -> {
             if(value.get("chats") != null){
                 Log.d("TAG", "onEvent: ");
-                chats = (ArrayList<String>) value.get("chats");
+                for(String checkId:(ArrayList<String>)value.get("chats")){
+                    firebaseFirestore.collection("chats").document(checkId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            ArrayList<String> participant =new ArrayList<>();
+                            participant=(ArrayList<String>)documentSnapshot.get("participant");
+                            for(String person:participant){
+                                if(!person.equals(firebaseUser.getUid())){
+                                    firebaseFirestore.collection("users").document(person).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Map<String,Object> chatInfo=new HashMap<>();
+                                            chatInfo.put("name",documentSnapshot.get("name"));
+                                            chatInfo.put("imageUrl",documentSnapshot.get("imageUrl"));
+                                            chatInfo.put("chatId",checkId);
+
+                                            chats.add(chatInfo);
+
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+                chatAdapter = new ChatAdapter(view.getContext(), chats, item -> {
+                    Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                    intent.putExtra("documentId", item.get("uid").toString());
+                    startActivity(intent);
+                });
+                rvChat.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                rvChat.setAdapter(chatAdapter);
+
             }
 
-            chatAdapter = new ChatAdapter(view.getContext(), chats, item -> {
-            Intent intent = new Intent(view.getContext(), ChatActivity.class);
-            intent.putExtra("documentId", item);
-            startActivity(intent);
-            });
-            rvChat.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            rvChat.setAdapter(chatAdapter);
+
         });
 
 

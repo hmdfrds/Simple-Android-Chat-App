@@ -131,8 +131,15 @@ rvMessage.scrollToPosition(0);
             if(documentId.isEmpty()){
                 firebaseFirestore.collection("chats").document().collection("message").add(message).addOnCompleteListener(task -> {
                     task.addOnSuccessListener(documentReference -> {
+
                         documentId = documentReference.getParent().getParent().getId();
 
+                        ArrayList<String> participant=new ArrayList<>();
+                        participant.add(receiverId);
+                        participant.add(firebaseUser.getUid());
+                        Map<String,Object> map=new HashMap<>();
+                        map.put("participant",participant);
+                        firebaseFirestore.collection("chats").document(documentId).set(map);
 
                         firebaseFirestore.collection("users").document(firebaseUser.getUid()).update("chats", FieldValue.arrayUnion(documentReference.getParent().getParent().getId())).addOnCompleteListener(task1 -> {
                             task1.addOnSuccessListener(unused -> {

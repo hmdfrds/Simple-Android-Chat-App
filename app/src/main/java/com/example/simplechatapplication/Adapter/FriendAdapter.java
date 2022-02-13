@@ -49,7 +49,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         String email = mData.get(position).get("email").toString();
         String name = mData.get(position).get("name").toString();
         String profileImg = mData.get(position).get("imageUrl").toString();
-
         Picasso.with(context).load(profileImg).into(holder.profileImg);
 
         //holder.txtID.setText(id);
